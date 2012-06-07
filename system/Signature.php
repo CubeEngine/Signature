@@ -195,6 +195,17 @@
 
         public function render()
         {
+            if (is_readable($this->basePath . 'validate.php'))
+            {
+                include $this->basePath . 'validate.php';
+                if (function_exists('validate'))
+                {
+                    if (!validate($this))
+                    {
+                        throw new RenderException('The request was not valid!');
+                    }
+                }
+            }
             $signature = @imagecreatefrompng($this->background);
             if ($signature === false)
             {
@@ -251,6 +262,10 @@
         private function getCached()
         {
             $data = null;
+            if ($this->cacheLifetime <= 0)
+            {
+                return null;
+            }
             if (file_exists($this->cachePath))
             {
                 $file = @fopen($this->cachePath, 'rb');
@@ -310,5 +325,10 @@
         public function getFormat()
         {
             return $this->format;
+        }
+
+        public function getConfig()
+        {
+            return $this->config;
         }
     }

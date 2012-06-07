@@ -2,7 +2,7 @@
     return array(
         'basics' => array(
             'background'        => 'gfx/default.png',
-            'cache_lifetime'    => 60 * 20,
+            //'cache_lifetime'    => 60 * 20,
             'paidonly'          => true,
 
 
