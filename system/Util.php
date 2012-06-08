@@ -11,4 +11,13 @@
             }
             Color::deallocate($image, $color);
         }
+        
+        public static function log($title, $message)
+        {
+            $string  = "====== $title ======\n";
+            $string .= trim(strip_tags(str_replace('/(<br\s*/?>)+/i', "\n", $message)));
+            $string .= "\n\n";
+            
+            file_put_contents(Loader::getPath() . 'log' . DIRECTORY_SEPARATOR . 'error.log', $string, FILE_APPEMD);
+        }
     }

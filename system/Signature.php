@@ -277,7 +277,7 @@
                     if ($timestamp)
                     {
                         $timestamp = intval(trim($timestamp, "\0"));
-                        if ($timestamp >= time())
+                        if ($timestamp >= time()) // TODO fix this
                         {
                             while(!feof($file))
                             {
@@ -310,7 +310,7 @@
                 if ($file !== false)
                 {
                     @flock($file, LOCK_EX);
-                    $timestamp = str_pad(time() + $this->cacheLifetime, 15, "\0", STR_PAD_RIGHT);
+                    $timestamp = str_pad(time() + $this->cacheLifetime, 15, "\0", STR_PAD_RIGHT); // TODO change this to use the last modfied date instead
                     @fwrite($file, $timestamp . $data, strlen($data) + 15);
                     @flock($file, LOCK_UN);
                     @fclose($file);

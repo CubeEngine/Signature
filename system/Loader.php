@@ -26,43 +26,50 @@
             self::load(self::$path . $class . '.php');
         }
 
-        public static function onError($errno, $errstr, $errfile, $errline, $errcontext)
+        public static function onError($errno, $message, $file, $line)
         {
             if (!error_reporting())
             {
                 return;
             }
+            $type = 'unknown';
+            switch ($errno)
+            {
+                case E_WARNING:
+                    $type = 'warning';
+                    break;
+                case E_NOTICE:
+                    $type = 'notice';
+                    break;
+                case E_STRICT:
+                    $type = 'strict';
+                    break;
+            }
+
+            $errfile = basename($errfile);
+            
             if (self::DEBUG)
             {
-                $type = 'unknown';
-                switch ($errno)
-                {
-                    case E_WARNING:
-                        $type = 'warning';
-                        break;
-                    case E_NOTICE:
-                        $type = 'notice';
-                        break;
-                    case E_STRICT:
-                        $type = 'strict';
-                        break;
-                }
-
-                $errfile = basename($errfile);
-                echo "[$type] $errstr @ $errfile:$errline";
+                echo "[$type] $message @ $file:$line";
             }
+            Util::log("$type @ $file:$line", $message);
             die();
         }
 
         public static function onException(Exception $e)
         {
+            $class = get_class($e);
+            $file = basename($e->getFile());
+            $line = $e->getLine();
+            $message = $e->getMessage();
             if (self::DEBUG)
             {
                 echo '<pre>';
-                echo '[' . get_class($e) . '] ' . $e->getMessage() . ' @ ' . basename($e->getFile()) . ':' . $e->getLine() . "\n\n";
+                echo "[$class] $message @ $file:$line\n\n";
                 echo $e->getTraceAsString();
                 echo '</pre>';
             }
+            Util::log($class @ $file:$line", $message);
             die();
         }
 
@@ -118,5 +125,10 @@
             {
                 require $path;
             }
+        }
+        
+        public static function getPath()
+        {
+            return self::$path;
         }
     }
