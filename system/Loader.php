@@ -69,7 +69,7 @@
                 echo $e->getTraceAsString();
                 echo '</pre>';
             }
-            Util::log($class @ $file:$line", $message);
+            Util::log("$class @ $file:$line", $message);
             die();
         }
 
