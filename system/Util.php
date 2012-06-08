@@ -18,6 +18,8 @@
             $string .= trim(strip_tags(str_replace('/(<br\s*/?>)+/i', "\n", $message)));
             $string .= "\n\n";
             
-            file_put_contents(Loader::getPath() . 'log' . DIRECTORY_SEPARATOR . 'error.log', $string, FILE_APPEND);
+            $path = Loader::getPath() . 'log' . DIRECTORY_SEPARATOR;
+            @mkdir($path, 0666, true);
+            file_put_contents($path . 'error.log', $string, FILE_APPEND);
         }
     }

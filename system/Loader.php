@@ -46,7 +46,7 @@
                     break;
             }
 
-            $errfile = basename($errfile);
+            $file = basename($file);
             
             if (self::DEBUG)
             {
