@@ -6,11 +6,11 @@
 
         public function __construct()
         {
-            if (isset($_SERVER['QUERY_STRING']))
+            if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING']))
             {
                 $route = trim(trim($_SERVER['QUERY_STRING'], '/'));
                 $segments = explode('/', $route);
-                if (count($segments) > 0)
+                if (count($segments) > 0 && strlen($segments[0] = trim($segments[0])))
                 {
                     $this->signature = strtolower(trim($segments[0]));
                     unset($segments[0]);
