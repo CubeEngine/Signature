@@ -253,10 +253,12 @@
 
         public function out()
         {
+            $data = $this->get();
+
             header('X-Powered-By: Cube Island');
             header('Content-Type: ' . $this->format->getMimeType());
 
-            echo $this->get();
+            echo $data;
         }
 
         private function getCached()
