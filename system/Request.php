@@ -6,9 +6,9 @@
 
         public function __construct()
         {
-            if (isset($_SERVER['PATH_INFO']))
+            if (isset($_SERVER['QUERY_STRING']))
             {
-                $route = trim(trim($_SERVER['PATH_INFO'], '/'));
+                $route = trim(trim($_SERVER['QUERY_STRING'], '/'));
                 $segments = explode('/', $route);
                 if (count($segments) > 0)
                 {
