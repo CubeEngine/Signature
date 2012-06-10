@@ -206,7 +206,7 @@
                     }
                 }
             }
-            $signature = @imagecreatefrompng($this->background);
+            $signature = @imagecreatefromstring(file_get_contents($this->background));
             if ($signature === false)
             {
                 throw new RenderException('Failed to load the configured background image!');

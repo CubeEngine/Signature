@@ -45,12 +45,12 @@
         'objects' => array(
             array(
                 'type'      => 'playerhead',
-                'position'  => new Vector2(14, 13),
+                'position'  => new Vector(14, 13),
                 'size'      => 42,
             ),
             array(
                 'type'      => 'text',
-                'position'  => new Vector2(70, 10 + 12),
+                'position'  => new Vector(70, 10 + 12),
                 'text'      => '{player}'
             ),
             array(
@@ -58,14 +58,18 @@
                 'query'     => 'SELECT `level` FROM jobs WHERE `username`=? LIMIT 1',
                 'default'   => 'n/a',
                 'required'  => false,
-                'position'  => new Vector2(145, 30 + 12)
+                'position'  => new Vector(145, 30 + 12)
             ),
             array(
                 'type'      => 'dbcontent',
                 'query'     => 'SELECT `balance` FROM iConomy WHERE `username`=? LIMIT 1',
                 'default'   => '0',
                 'required'  => false,
-                'position'  => new Vector2(118, 53 + 12),
+                'position'  => new Vector(118, 53 + 12),
+            ),
+            array(
+                'type'      => 'steve',
+                'scale'     => 2
             ),
         )
     );
