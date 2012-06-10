@@ -72,20 +72,6 @@
                 'type'      => 'steve',
                 'scale'     => 5,
                 'position'  => new Vector(80, 0)
-            ),
-            'shadow' => array(
-                'type'      => 'text',
-                'text'      => 'BAAAUUUM!!!!',
-                'angle'     => -19,
-                'font'      => 'minecraft',
-                'color'     => new Color('#F00'),
-                'position'  => new Vector(66, 21)
-            ),
-            array(
-                'extends'   => 'shadow',
-                'angle'     => 19,
-                'color'     => new Color('#FF0'),
-                'position'  => new Vector(65, 70)
             )
         )
     );

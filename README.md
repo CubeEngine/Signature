@@ -1,4 +1,4 @@
-PlayerSignature
-===============
+Signature
+=========
 
-Generates a player specific signature based on informations given in a configuration file
+The web application generates dynamic images which can be used as forum signatures.
