@@ -124,7 +124,19 @@
                         {
                             $formatType =& $basics['format']['type'];
                         }
-                        $this->format = Loader::format($formatType);
+                        $clazz = Loader::format($formatType);
+                        if ($clazz)
+                        {
+                            $instance = new $clazz();
+                            if ($instance instanceof RenderFormat)
+                            {
+                                $this->format = $instance;
+                            }
+                        }
+                        if (!is_object($this->format))
+                        {
+                            throw new RenderException('Could not load the render format ' . $name);
+                        }
                     }
                     else
                     {
@@ -220,13 +232,61 @@
                 throw new RenderException('Failed to set the configured savealpha mode');
             }
 
-            foreach ($this->config['objects'] as $objectCfg)
+            $resolved = array();
+            $objects =& $this->config['objects'];
+            foreach ($objects as $index => &$objectCfg)
             {
-                if (is_array($objectCfg) && isset($objectCfg['type']))
+                if (is_array($objectCfg))
                 {
-                    $object = Loader::object($objectCfg['type']);
-                    $object->render($this, $signature, array_merge($this->objectDefaults, $objectCfg));
+                    if (isset($objectCfg['extends']))
+                    {
+                        $extends =& $objectCfg['extends'];
+                        if (isset($objects[$extends]) && in_array($extends, $resolved) && is_array($objects[$extends]))
+                        {
+                            $objectCfg = array_merge($objects[$extends], $objectCfg);
+                        }
+                        else
+                        {
+                            throw new RenderException("[Object $index] Failed to extend $extends");
+                        }
+                    }
+                    else
+                    {
+                        $objectCfg = array_merge($this->objectDefaults, $objectCfg);
+                    }
+                    $resolved[] = $index;
+                    if (isset($objectCfg['type']))
+                    {
+                        $object = null;
+                        $clazz = Loader::object($objectCfg['type']);
+                        if ($clazz)
+                        {
+                            $instance = new $clazz();
+                            if ($instance instanceof RenderObject)
+                            {
+                                $object =& $instance;
+                            }
+                        }
+                        if (!$object)
+                        {
+                            throw new RenderException('Could not find the render object ' . $name);
+                        }
+                        $requiredOptions = $object->requiredOptions();
+                        if (is_array($requiredOptions))
+                        {
+                            foreach ($requiredOptions as $option)
+                            {
+                                if (!isset($objectCfg[$option]))
+                                {
+                                    throw new RenderException("[Object $index] Not all needed options where specified: $option");
+                                }
+                            }
+                        }
+                        $object->render($this, $signature, $objectCfg);
+                        continue;
+                    }
                 }
+                throw new RenderException("[Object $index] Invalid object specified!");
             }
 
             $formatCfg =& $this->config['basics']['format'];

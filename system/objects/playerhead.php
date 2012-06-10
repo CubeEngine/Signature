@@ -14,4 +14,9 @@
             }
             @imagedestroy($skin);
         }
+
+        public function requiredOptions()
+        {
+            return array('position', 'size');
+        }
     }

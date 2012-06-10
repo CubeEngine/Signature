@@ -3,13 +3,17 @@
     {
         public function render(Signature $sig, $image, array $config)
         {
-            if (isset($config['text'], $config['font'], $config['size'], $config['angle'], $config['position'], $config['color']))
+            $angle = 0;
+            if (isset($config['angle']) && is_numeric($config['angle']))
             {
-                Util::renderText($image, $sig->parseString($config['text']), $sig->getFont($config['font']), $config['size'], $config['angle'], $config['position'], $config['color']);
+                $angle = doubleval($config['angle']);
             }
-            else
-            {
-                throw new RenderException('Not all necessary parameters were given!');
-            }
+
+            Util::renderText($image, $sig->parseString($config['text']), $sig->getFont($config['font']), $config['size'], $angle, $config['position'], $config['color']);
+        }
+
+        public function requiredOptions()
+        {
+            return array('text', 'font', 'size', 'position', 'color');
         }
     }

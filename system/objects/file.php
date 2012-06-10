@@ -21,4 +21,13 @@
                 throw new RenderException('No file was specified!');
             }
         }
+
+        public function requiredOptions()
+        {
+            $options = parent::requiredOptions();
+
+            $options[] = 'file';
+
+            return $options;
+        }
     }

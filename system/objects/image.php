@@ -11,14 +11,14 @@
                     $result = @imagecopyresampled(
                         $image,
                         $subimage,
-                        $config['position']['to'][0],
-                        $config['position']['to'][1],
-                        $config['position']['from'][0],
-                        $config['position']['from'][1],
-                        $config['metrics']['to'][0],
-                        $config['metrics']['to'][1],
-                        $config['metrics']['from'][0],
-                        $config['metrics']['from'][1]
+                        $config['position']['to']->x,
+                        $config['position']['to']->y,
+                        $config['position']['from']->x,
+                        $config['position']['from']->y,
+                        $config['metrics']['to']->x,
+                        $config['metrics']['to']->y,
+                        $config['metrics']['from']->x,
+                        $config['metrics']['from']->y
                     );
                     if ($result === false)
                     {
@@ -31,5 +31,10 @@
                     throw new RenderException('Failed to load a configured image!');
                 }
             }
+        }
+
+        public function requiredOptions()
+        {
+            return array('position', 'metrics');
         }
     }

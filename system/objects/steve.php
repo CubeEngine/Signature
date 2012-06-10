@@ -12,8 +12,13 @@
             }
             $steve = new Steve($skin, $scale);
             $steveImage = $steve->renderImage();
-            imagecopy($image, $steveImage, 150, 10, 0, 0, $steve->getWidth(), $steve->getHeight());
+            imagecopy($image, $steveImage, $config['position']->x, $config['position']->y, 0, 0, $steve->getWidth(), $steve->getHeight());
             imagedestroy($skin);
             imagedestroy($steveImage);
+        }
+        
+        public function requiredOptions()
+        {
+            return array('position');
         }
     }

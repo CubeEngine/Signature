@@ -25,7 +25,8 @@
             // the fonts
             'fonts' => array(
                 // absolute path => global resources folder, relative path => theme resources folder
-                'georgia bold' => '/font/georgiab.ttf'
+                'georgia bold'  => '/font/georgiab.ttf',
+                'minecraft'     => '/font/minecraft.ttf'
             ),
 
             // the single objects override/extend these values
@@ -65,11 +66,26 @@
                 'query'     => 'SELECT `balance` FROM iConomy WHERE `username`=? LIMIT 1',
                 'default'   => '0',
                 'required'  => false,
-                'position'  => new Vector(118, 53 + 12),
+                'position'  => new Vector(118, 53 + 12)
             ),
             array(
                 'type'      => 'steve',
-                'scale'     => 2
+                'scale'     => 5,
+                'position'  => new Vector(80, 0)
             ),
+            'shadow' => array(
+                'type'      => 'text',
+                'text'      => 'BAAAUUUM!!!!',
+                'angle'     => -19,
+                'font'      => 'minecraft',
+                'color'     => new Color('#F00'),
+                'position'  => new Vector(66, 21)
+            ),
+            array(
+                'extends'   => 'shadow',
+                'angle'     => 19,
+                'color'     => new Color('#FF0'),
+                'position'  => new Vector(65, 70)
+            )
         )
     );

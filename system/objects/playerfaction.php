@@ -1,5 +1,7 @@
 <?php
-    class PlayerfactionObject extends TextObject
+    Loader::object('text');
+    
+    class PlayerfactionObject extends PlayermoneyObject
     {
         public function render(Signature $sig, $image, array $config)
         {

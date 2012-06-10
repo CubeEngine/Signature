@@ -1,4 +1,6 @@
 <?php
+    Loader::object('text');
+
     class DbcontentObject extends TextObject
     {
         public function render(Signature $sig, $image, array $config)
@@ -26,5 +28,10 @@
             {}
             $config['text'] = $value;
             parent::render($sig, $image, $config);
+        }
+
+        public function requiredOptions()
+        {
+            return array('database', 'query', 'font', 'size', 'position', 'color');
         }
     }

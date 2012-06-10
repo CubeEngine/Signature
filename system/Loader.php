@@ -16,14 +16,9 @@
             set_error_handler(array(__CLASS__, 'onError'), -1);
             set_exception_handler(array(__CLASS__, 'onException'));
             self::$path = dirname(__FILE__) . DIRECTORY_SEPARATOR;
-            self::$objectPath = self::$path . 'objects' . DIRECTORY_SEPARATOR;
-            self::$formatPath = self::$path . 'formats' . DIRECTORY_SEPARATOR;
-            spl_autoload_register(array('Loader', 'autoload'));
-        }
-
-        public static function autoload($class)
-        {
-            self::load(self::$path . $class . '.php');
+            self::$objectPath = 'objects' . DIRECTORY_SEPARATOR;
+            self::$formatPath = 'formats' . DIRECTORY_SEPARATOR;
+            spl_autoload_register(array('Loader', 'load'));
         }
 
         public static function onError($errno, $message, $file, $line)
@@ -83,17 +78,13 @@
             $clazz = ucfirst($name) . 'Object';
             if (!class_exists($clazz))
             {
-                self::load(self::$objectPath . $name . '.php');
+                self::load(self::$objectPath . $name);
             }
             if (class_exists($clazz))
             {
-                $instance = new $clazz();
-                if ($instance instanceof RenderObject)
-                {
-                    return $instance;
-                }
+                return $clazz;
             }
-            throw new RenderException('Could not find the render object ' . $name);
+            return null;
         }
 
         /**
@@ -106,21 +97,18 @@
             $clazz = ucfirst($name) . 'Format';
             if (!class_exists($clazz))
             {
-                self::load(self::$formatPath . $name . '.php');
+                self::load(self::$formatPath . $name);
             }
             if (class_exists($clazz))
             {
-                $instance = new $clazz();
-                if ($instance instanceof RenderFormat)
-                {
-                    return $instance;
-                }
+                return $clazz;
             }
-            throw new RenderException('Could not find the render format ' . $name);
+            return null;
         }
 
-        private static function load($path)
+        public static function load($path)
         {
+            $path = self::$path . $path . '.php';
             if (is_readable($path))
             {
                 require $path;
