@@ -21,7 +21,7 @@
                 position: absolute;
                 bottom: 0;
                 text-align: center;
-                width: 100%;
+                width: 570px;
                 padding: 30px 0;
             }
             body > div > div > img {
@@ -39,21 +39,30 @@
                 <span>Playername:</span> <input type="text" size="16" maxlength="16" value="your minecraft name"> <button type="button">Go!</button>
             </p>
             <div>
-                <img id="image" src="index.php?default/quick_wango" alt="signature">
+                <img id="image" src="" alt="signature">
             </div>
             <script type="text/javascript">
                 var form = document.getElementById("form");
                 var img = document.getElementById("image");
                 if (form && img) {
+                    var baseUrl = "index.php?default/";
+                    var defaultUrl = baseUrl + "quick_wango";
+                    img.src = defaultUrl;
+
                     var input = form.getElementsByTagName("input")[0];
                     form.getElementsByTagName("button")[0].onclick = function() {
                         if (input.value) {
-                            img.src = "index.php?default/" + input.value;
+                            img.src = baseUrl + input.value;
                         }
                     }
+
+                    var failCounter = 0;
                     img.onerror = function() {
                         alert('Could not load that signature!');
-                        this.src = "index.php?default/quick_wango";
+                        if (failCounter) {
+                            this.src = defaultUrl;
+                        }
+                        ++failCounter;
                     }
 
                     img.onclick = function() {
