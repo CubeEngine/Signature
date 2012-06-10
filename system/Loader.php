@@ -42,7 +42,8 @@
             }
 
             $file = basename($file);
-            
+
+            header('HTTP/1.1 500 Internal Server Error');
             if (self::DEBUG)
             {
                 echo "[$type] $message @ $file:$line";
@@ -57,6 +58,7 @@
             $file = basename($e->getFile());
             $line = $e->getLine();
             $message = $e->getMessage();
+            header('HTTP/1.1 500 Internal Server Error');
             if (self::DEBUG)
             {
                 echo '<pre>';

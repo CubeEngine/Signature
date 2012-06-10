@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Get your Signature!</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
+            body > div {
+                margin: 1cm auto;
+                padding: 15px;
+                width: 600px;
+                min-height: 400px;
+                position: relative;
+                border-radius: 20px;
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+            body > div > div {
+                position: absolute;
+                bottom: 0;
+                text-align: center;
+                width: 100%;
+                padding: 30px 0;
+            }
+            body > div > div > img {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <p>
+                Hi!<br>
+                Here you can generate the link to your Signature:
+            </p>
+            <p id="form">
+                <span>Playername:</span> <input type="text" size="16" maxlength="16" value="your minecraft name"> <button type="button">Go!</button>
+            </p>
+            <div>
+                <img id="image" src="index.php?default/quick_wango" alt="signature">
+            </div>
+            <script type="text/javascript">
+                var form = document.getElementById("form");
+                var img = document.getElementById("image");
+                if (form && img) {
+                    var input = form.getElementsByTagName("input")[0];
+                    form.getElementsByTagName("button")[0].onclick = function() {
+                        if (input.value) {
+                            img.src = "index.php?default/" + input.value;
+                        }
+                    }
+                    img.onerror = function() {
+                        alert('Could not load that signature!');
+                        this.src = "index.php?default/quick_wango";
+                    }
+
+                    img.onclick = function() {
+                        alert(this.src);
+                    }
+                }
+            </script>
+        </div>
+    </body>
+</html>
